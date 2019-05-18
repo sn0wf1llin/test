@@ -3,3 +3,7 @@ module.exports = {
       return "Hello";
    }
 }
+
+function test() {
+	alert("TEST!");
+}
