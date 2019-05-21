@@ -42,7 +42,7 @@ def generate(args):
     if args.w is not None:
         with open(args.w, 'a') as f:
             for i in scombinations:
-                f.write(''.join(i))
+                f.write(''.join(i) + '\n')
     else:
         for i in scombinations:
             print(''.join(i))
