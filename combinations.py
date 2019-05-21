@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from itertools import combinations as comb
+from itertools import combinations, permutations, combinations_with_replacement
 from string import ascii_lowercase, ascii_uppercase, ascii_letters, digits, hexdigits, octdigits
 import argparse
 
@@ -37,7 +37,12 @@ def generate(args):
     sset = make_symbols_set(args)
     n = int(args.n)
 
-    scombinations = comb(''.join(str(i) for i in sset), n)
+    if args.permutations:
+        scombinations = permutations(''.join(str(i) for i in sset), n)
+    elif args.combinationsreplacement:
+        scombinations = combinations_with_replacement(''.join(str(i) for i in sset), n)
+    else:
+        scombinations = combinations(''.join(str(i) for i in sset), n)
 
     if args.w is not None:
         with open(args.w, 'a') as f:
@@ -50,6 +55,9 @@ def generate(args):
 
 def main():
     parser = argparse.ArgumentParser(description='Process combinations')
+    parser.add_argument('--perm', '-p', dest='permutations', action='store_true')
+    parser.add_argument('--comb', '-c', dest='combinations', action='store_true')
+    parser.add_argument('--comb-with-repl', '-cr', dest='combinationsreplacement', action='store_true')
     parser.add_argument('--ascii-lowercase', '-al', dest='lowercase', action='store_true')
     parser.add_argument('--ascii-uppercase', '-au', dest='uppercase', action='store_true')
     parser.add_argument('--ascii-letters', '-a', dest='letters', action='store_true')
